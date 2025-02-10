@@ -61,7 +61,7 @@ jobs:
       - run:
           name: Deploy to staging
           command: |
-            mkdir -p /var/www/myapp && cp /workspace/myapp /var/www/myapp
+            sudo mkdir -p /var/www/myapp && cp ./myapp /var/www/myapp
             ###ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp . /var/www/myapp"
 
 workflows:
