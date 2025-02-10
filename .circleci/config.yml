@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Build application
           command: go build -o myapp
-      - run: # govulncheck を追加
+      - run:
           name: Check for vulnerabilities
           command: |
             go install golang.org/x/vuln/cmd/govulncheck@latest
