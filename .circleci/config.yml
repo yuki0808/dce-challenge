@@ -44,9 +44,9 @@ jobs:
           command: go mod download
       - run:
           name: Run tests
-          command: gotestsum --junitfile junit.xml
+          command: go test -coverprofile=coverage.out -parallel 4
       - store_test_results:
-          path: junit.xml
+          path: coverage.out
 
   deploy_staging:
     docker:
