@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/go:1.23 # Go 1.23 を使用 (イメージを統一)
+      - image: cimg/go:1.23
     steps:
       - checkout
       - restore_cache:
@@ -23,9 +23,9 @@ jobs:
           path: myapp
 
   test:
-    needs: build
+    needs: [build] # needsは配列で指定
     docker:
-      - image: cimg/go:1.23 # Go 1.23 を使用 (イメージを統一)
+      - image: cimg/go:1.23
     steps:
       - checkout
       - restore_cache:
@@ -40,8 +40,8 @@ jobs:
       - store_test_results:
           path: coverage.out
 
-  deploy_staging: # ジョブ名を修正
-    needs: test
+  deploy_staging:
+    needs: [test] # needsは配列で指定
     environment: staging
     docker:
       - image: cimg/base:stable
@@ -59,9 +59,9 @@ workflows:
     jobs:
       - build
       - test:
-          requires: build
-      - deploy_staging: # ワークフロー名を修正
-          requires: test
+          requires: [build] # requiresは配列で指定
+      - deploy_staging:
+          requires: [test] # requiresは配列で指定
           filters:
             branches:
               only:
