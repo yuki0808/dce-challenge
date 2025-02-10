@@ -50,15 +50,19 @@ jobs:
 
   deploy_staging:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/go:1.23
     steps:
       - checkout
       - attach_workspace:
-          at: .
+          at: /workspace
+      - run:
+          name: Debug: List workspace contents
+          command: ls -l /workspace
       - run:
           name: Deploy to staging
           command: |
-            ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp . /var/www/myapp"
+            mkdir -p /var/www/myapp && cp /workspace/myapp /var/www/myapp
+            ###ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp . /var/www/myapp"
 
 workflows:
   build-test-and-deploy:
@@ -70,7 +74,7 @@ workflows:
       - deploy_staging:
           requires:
             - test
-          filters:
-            branches:
-              only:
-                - main
+          ###filters:
+            ###branches:
+              ###only:
+                ###- main
