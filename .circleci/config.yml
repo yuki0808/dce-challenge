@@ -54,7 +54,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /workspace
+          at: .
       - run:
           name: List workspace contents
           command: ls -l /workspace
