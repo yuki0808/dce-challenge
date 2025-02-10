@@ -44,7 +44,7 @@ jobs:
           command: go mod download
       - run:
           name: Run tests
-          command: gotestsum --junitfile junit.xml -parallel 4
+          command: gotestsum --junitfile junit.xml
       - store_test_results:
           path: junit.xml
 
