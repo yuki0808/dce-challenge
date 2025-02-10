@@ -3,77 +3,66 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/go:1.23 # Go 1.20 を使用
+      - image: cimg/go:1.23 # Go 1.23 を使用 (イメージを統一)
     steps:
       - checkout
-
-      - restore_cache: # 依存関係キャッシュの復元
+      - restore_cache:
           keys:
             - go-mod-{{ checksum "go.sum" }}
-
       - run:
           name: Download dependencies
           command: go mod download
-
-      - save_cache: # 依存関係キャッシュの保存
+      - save_cache:
           key: go-mod-{{ checksum "go.sum" }}
           paths:
             - /go/pkg/mod
-
       - run:
           name: Build application
           command: go build -o myapp
-
-      - store_artifacts: # ビルド成果物の保存
+      - store_artifacts:
           path: myapp
 
   test:
-    needs: build # build ジョブ完了後に実行
+    needs: build
     docker:
-      - image: cimg/go:1.23
+      - image: cimg/go:1.23 # Go 1.23 を使用 (イメージを統一)
     steps:
       - checkout
-
-      - restore_cache: # 依存関係キャッシュの復元
+      - restore_cache:
           keys:
             - go-mod-{{ checksum "go.sum" }}
-
       - run:
           name: Download dependencies
           command: go mod download
-
       - run:
           name: Run tests
-          command: go test ./... -coverprofile=coverage.out -parallel 4 # 並列数: 4 (調整可能)
-
-      - store_test_results: # テスト結果の保存
+          command: go test ./... -coverprofile=coverage.out -parallel 4
+      - store_test_results:
           path: coverage.out
 
-  deploy_staging: # ステージング環境へのデプロイ
-    needs: test # test ジョブ完了後に実行
-    environment: staging # 環境名
+  deploy_staging: # ジョブ名を修正
+    needs: test
+    environment: staging
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
-      - attach_workspace: # ビルド成果物 (myapp) をアタッチ
+      - attach_workspace:
           at: /tmp/workspace
       - run:
           name: Deploy to staging
           command: |
-            # デプロイコマンド (例: ssh, rsync など)
-            # 環境変数 STAGING_SERVER, STAGING_USER などを使用
             ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp /tmp/workspace/myapp /var/www/myapp"
 
 workflows:
-  build-test-and-deploy: # ワークフロー名
+  build-test-and-deploy:
     jobs:
       - build
       - test:
-          requires: build # build ジョブ完了後に実行
-      - deploy-staging:
-          requires: test # test ジョブ完了後に実行
-          filters: # 特定ブランチでのみデプロイ
+          requires: build
+      - deploy_staging: # ワークフロー名を修正
+          requires: test
+          filters:
             branches:
               only:
-                - main # main ブランチのみ
+                - main
