@@ -24,6 +24,10 @@ jobs:
           command: |
             go install golang.org/x/vuln/cmd/govulncheck@latest
             govulncheck ./...
+      - persist_to_workspace:
+          root: .
+          paths:
+            - myapp
       - store_artifacts:
           path: myapp
 
