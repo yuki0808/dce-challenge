@@ -39,11 +39,9 @@ jobs:
       - store_test_results:
           path: coverage.out
 
-  deploy-staging:
+  deploy_staging:
     docker:
-      - image: cimg/base:stable
-    environment:
-      STAGING_ENV: "true"
+      - image: cimg/base:stable  # ✅ `docker` で適切なイメージを定義
     steps:
       - checkout
       - attach_workspace:
@@ -60,7 +58,7 @@ workflows:
       - test:
           requires:
             - build
-      - deploy_staging:
+      - deploy_staging:  # ✅ `deploy_staging` が `jobs` にあることを確認
           requires:
             - test
           filters:
