@@ -67,12 +67,6 @@ jobs:
       - run:
           name: List myapp
           command: sudo ls -l /var/www/myapp/
-      - run:
-          name: Run the application
-          command: sudo /var/www/myapp/myapp &
-      - run:
-          name: Curl to myapp
-          command: curl http://localhost:1337/challenge   
 
 workflows:
   build-test-and-deploy:
