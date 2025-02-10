@@ -69,7 +69,7 @@ jobs:
           command: sudo ls -l /var/www/myapp/
       - run:
           name: Run the application
-          command: sudo /var/www/myapp/myapp
+          command: sudo /var/www/myapp/myapp &
       - run:
           name: Curl to myapp
           command: curl http://localhost:1337/challenge   
