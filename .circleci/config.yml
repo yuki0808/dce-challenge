@@ -64,6 +64,9 @@ jobs:
             sudo mkdir -p /var/www/myapp
             sudo cp ./myapp /var/www/myapp/
             ###ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp . /var/www/myapp"
+      - run:
+          name: List myapp
+          command: sudo ls -l /var/www/myapp/
 
 workflows:
   build-test-and-deploy:
