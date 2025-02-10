@@ -49,7 +49,7 @@ jobs:
       - store_test_results: # テスト結果の保存
           path: coverage.out
 
-  deploy-staging: # ステージング環境へのデプロイ
+  deploy_staging: # ステージング環境へのデプロイ
     needs: test # test ジョブ完了後に実行
     environment: staging # 環境名
     docker:
