@@ -22,8 +22,8 @@ jobs:
       - run: # govulncheck を追加
           name: Check for vulnerabilities
           command: |
-            go install golang.org/x/vuln/cmd/govulncheck@latest # govulncheck をインストール
-            govulncheck ./... # 現在のモジュールとサブモジュールをチェック
+            go install golang.org/x/vuln/cmd/govulncheck@latest
+            govulncheck ./...
       - store_artifacts:
           path: myapp
 
