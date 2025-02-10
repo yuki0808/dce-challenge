@@ -6,7 +6,14 @@ jobs:
       - image: cimg/go:1.23
     steps:
       - checkout
+      - restore_cache: # キャッシュの復元
+          keys:
+            - go-mod-{{ checksum "go.sum" }}
       - go mod download
+      - save_cache: # キャッシュの保存
+          key: go-mod-{{ checksum "go.sum" }}
+          paths:
+            - /go/pkg/mod
       - go build -o myapp
       - go test ./... -coverprofile=coverage.out
       - store_artifacts:
