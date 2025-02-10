@@ -46,7 +46,7 @@ jobs:
           name: Run tests
           command: gotestsum --junitfile junit.xml -parallel 4
       - store_test_results:
-          path: coverage.out
+          path: junit.xml
 
   deploy_staging:
     docker:
