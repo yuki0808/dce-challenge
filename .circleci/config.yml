@@ -56,7 +56,7 @@ jobs:
       - attach_workspace:
           at: /workspace
       - run:
-          name: Debug: List workspace contents
+          name: List workspace contents
           command: ls -l /workspace
       - run:
           name: Deploy to staging
