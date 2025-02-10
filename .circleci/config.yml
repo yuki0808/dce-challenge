@@ -19,6 +19,11 @@ jobs:
       - run:
           name: Build application
           command: go build -o myapp
+      - run: # govulncheck を追加
+          name: Check for vulnerabilities
+          command: |
+            go install golang.org/x/vuln/cmd/govulncheck@latest # govulncheck をインストール
+            govulncheck ./... # 現在のモジュールとサブモジュールをチェック
       - store_artifacts:
           path: myapp
 
@@ -41,7 +46,7 @@ jobs:
 
   deploy_staging:
     docker:
-      - image: cimg/base:stable  # ✅ `docker` で適切なイメージを定義
+      - image: cimg/base:stable
     steps:
       - checkout
       - attach_workspace:
@@ -58,7 +63,7 @@ workflows:
       - test:
           requires:
             - build
-      - deploy_staging:  # ✅ `deploy_staging` が `jobs` にあることを確認
+      - deploy_staging:
           requires:
             - test
           filters:
