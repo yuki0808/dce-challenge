@@ -25,7 +25,7 @@ jobs:
             go install golang.org/x/vuln/cmd/govulncheck@latest
             govulncheck ./...
       - persist_to_workspace:
-          root: /workspace
+          root: .
           paths:
             - myapp
       - store_artifacts:
@@ -44,7 +44,7 @@ jobs:
           command: go mod download
       - run:
           name: Run tests
-          command: go test ./... -coverprofile=coverage.out -parallel 4
+          command: gotestsum --junitfile junit.xml -parallel 4
       - store_test_results:
           path: coverage.out
 
@@ -54,11 +54,11 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /workspace
+          at: .
       - run:
           name: Deploy to staging
           command: |
-            ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp /workspace/myapp /var/www/myapp"
+            ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp . /var/www/myapp"
 
 workflows:
   build-test-and-deploy:
