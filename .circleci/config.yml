@@ -53,9 +53,9 @@ jobs:
       - image: cimg/go:1.23
     steps:
       - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:R7nNh/wxX4zR1H7NQJjONekwv+87TnUBqS5dbtPzohY"
+      ###- add_ssh_keys:
+      ###    fingerprints:
+      ###      - "SHA256:R7nNh/wxX4zR1H7NQJjONekwv+87TnUBqS5dbtPzohY"
       - attach_workspace:
           at: .
       - run:
@@ -64,10 +64,10 @@ jobs:
       - run:
           name: Deploy to staging server
           command: |
-            ####sudo mkdir -p /var/www/myapp
-            ###sudo cp ./myapp /var/www/myapp/
-            sudo ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-183-143-60.ap-northeast-1.compute.amazonaws.com "mkdir -p /var/www/myapp && cp ./myapp /var/www/myapp/"
-            ###ssh ${STAGING_USER}@${STAGING_SERVER} "mkdir -p /var/www/myapp && cp . /var/www/myapp"
+            sudo mkdir -p /var/www/myapp
+            sudo cp ./myapp /var/www/myapp/
+            ###sudo ssh -o StrictHostKeyChecking=no ubuntu@ec2-18-183-143-60.ap-northeast-1.compute.amazonaws.com "mkdir -p /var/www/myapp && cp ./myapp /var/www/myapp/"
+  
       - run:
           name: List myapp
           command: sudo ls -l /var/www/myapp/
