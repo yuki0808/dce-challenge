@@ -23,7 +23,6 @@ jobs:
           path: myapp
 
   test:
-    needs: [build] # needsは配列で指定
     docker:
       - image: cimg/go:1.23
     steps:
@@ -40,11 +39,11 @@ jobs:
       - store_test_results:
           path: coverage.out
 
-  deploy_staging:
-    needs: [test] # needsは配列で指定
-    environment: staging
+  deploy-staging:
     docker:
       - image: cimg/base:stable
+    environment:
+      STAGING_ENV: "true"
     steps:
       - checkout
       - attach_workspace:
@@ -59,9 +58,11 @@ workflows:
     jobs:
       - build
       - test:
-          requires: [build] # requiresは配列で指定
+          requires:
+            - build
       - deploy_staging:
-          requires: [test] # requiresは配列で指定
+          requires:
+            - test
           filters:
             branches:
               only:
