@@ -56,7 +56,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:R+RxsogfKi8zGNT3BbfmdbqDvkCOXKYIq+FTwjPlfHE"
+            - "SHA256:R7nNh/wxX4zR1H7NQJjONekwv+87TnUBqS5dbtPzohY"
       - attach_workspace:
           at: .
       - run:
@@ -67,7 +67,7 @@ jobs:
           command: |
             ###sudo mkdir -p /var/www/myapp
             ###sudo cp ./myapp /var/www/myapp/
-            sudo ssh -o StrictHostKeyChecking=no foo@${SERVER_NAME}
+            sudo ssh -o StrictHostKeyChecking=no ubuntu@${SERVER_NAME}
             ###scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@${SERVER_NAME}:/home/ubuntu/myapp
   
       - run:
