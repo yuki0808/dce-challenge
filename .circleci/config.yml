@@ -60,14 +60,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: List workspace contents
+          name: Confirmation of build application exit 
           command: ls -l .
       - run:
-          name: Deploy to staging server
+          name: Deploy to EC2 Server
           command: |
-            ###sudo mkdir -p /var/www/myapp
-            ###sudo cp ./myapp /var/www/myapp/
-            ###ssh -o StrictHostKeyChecking=no foo@ec2-54-248-203-71.ap-northeast-1.compute.amazonaws.com
             scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@ec2-54-248-203-71.ap-northeast-1.compute.amazonaws.com:/home/foo/www/myapp
 
 workflows:
