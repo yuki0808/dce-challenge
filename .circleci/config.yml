@@ -44,7 +44,6 @@ jobs:
           command: go mod download
       - run:
           name: Run tests
-          ###command: go test -coverprofile=coverage.out -parallel 4
           command: gotestsum --junitfile test_output.xml
       - store_test_results:
           path: test_output.xml
