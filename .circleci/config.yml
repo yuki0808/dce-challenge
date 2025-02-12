@@ -43,9 +43,6 @@ jobs:
           name: Download dependencies
           command: go mod download
       - run:
-          name: Install go-junit-xml
-          command: go install github.com/jstemmer/go-junit-xml/v2@latest
-      - run:
           name: Run tests
           ###command: go test -coverprofile=coverage.out -parallel 4
           command: gotestsum --junitfile test_output.xml
