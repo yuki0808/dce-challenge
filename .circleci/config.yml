@@ -53,7 +53,6 @@ jobs:
       - image: cimg/go:1.23
       
     steps:
-      - checkout
       - add_ssh_keys:
           fingerprints:
             - "SHA256:R+RxsogfKi8zGNT3BbfmdbqDvkCOXKYIq+FTwjPlfHE"
