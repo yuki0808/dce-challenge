@@ -48,11 +48,11 @@ jobs:
       - run:
           name: Run tests
           ###command: go test -coverprofile=coverage.out -parallel 4
-          command: go test -coverprofile=coverage.out -parallel 4 | go-junit-xml > test-output.xml
+          command: gotestsum --junitfile test_output.xml
       - store_test_results:
-          path: test-output.xml
+          path: test_output.xml
 
-  deploy_staging:
+  deploy:
     docker:
       - image: cimg/go:1.23
       
@@ -77,7 +77,7 @@ workflows:
       - test:
           requires:
             - build
-      - deploy_staging:
+      - deploy:
           requires:
             - test
           filters:
