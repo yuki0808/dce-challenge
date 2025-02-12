@@ -63,9 +63,10 @@ jobs:
           command: ls -l .
       - run:
           name: Deploy to EC2 Server
-          command: |
-            scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@ec2-57-180-50-14.ap-northeast-1.compute.amazonaws.com:/home/foo/www/myapp
-
+          command: scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@ec2-3-112-19-167.ap-northeast-1.compute.amazonaws.com:/home/foo/www/myapp
+      - run:
+          name: Start myapp
+          command: ssh -o StrictHostKeyChecking=no ${SSH_USER}@ec2-3-112-19-167.ap-northeast-1.compute.amazonaws.com "nohup /home/foo/www/myapp/myapp > myapp.log 2>&1 &"
 workflows:
   build-test-and-deploy:
     jobs:
@@ -76,7 +77,7 @@ workflows:
       - deploy:
           requires:
             - test
-          filters:
-            branches:
-              only:
-                - main
+          ###filters:
+          ###  branches:
+          ###    only:
+          ###      - main
