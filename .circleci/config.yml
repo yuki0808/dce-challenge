@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Deploy to EC2 Server
           command: |
-            scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@ec2-54-248-203-71.ap-northeast-1.compute.amazonaws.com:/home/foo/www/myapp
+            scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@ec2-57-180-50-14.ap-northeast-1.compute.amazonaws.com:/home/foo/www/myapp
 
 workflows:
   build-test-and-deploy:
