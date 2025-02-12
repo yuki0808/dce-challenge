@@ -44,9 +44,10 @@ jobs:
           command: go mod download
       - run:
           name: Run tests
-          command: go test -coverprofile=coverage.out -parallel 4
+          ###command: go test -coverprofile=coverage.out -parallel 4
+          command: go test ./... -coverprofile=coverage.out -parallel 4 | go-junit-xml > test-output.xml
       - store_test_results:
-          path: coverage.out
+          path: test-output.xml
 
   deploy_staging:
     docker:
@@ -76,7 +77,7 @@ workflows:
       - deploy_staging:
           requires:
             - test
-          ###filters:
-            ###branches:
-              ###only:
-                ###- main
+          filters:
+            branches:
+              only:
+                - main
