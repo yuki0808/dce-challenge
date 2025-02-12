@@ -67,7 +67,7 @@ jobs:
           command: |
             ###sudo mkdir -p /var/www/myapp
             ###sudo cp ./myapp /var/www/myapp/
-            sudo ssh -o StrictHostKeyChecking=no foo@ec2-54-248-203-71.ap-northeast-1.compute.amazonaws.com
+            ssh -o StrictHostKeyChecking=no foo@ec2-54-248-203-71.ap-northeast-1.compute.amazonaws.com
             ###scp -o StrictHostKeyChecking=no ./myapp ${SSH_USER}@${SERVER_NAME}:/home/ubuntu/myapp
   
       - run:
