@@ -44,7 +44,9 @@ jobs:
           command: go mod download
       - run:
           name: Run tests
-          command: gotestsum --junitfile test_output.xml -race -p $(nproc / 2)
+          command: |
+            go get -u github.com/gotestsum/gotestsum/cmd/gotestsum@latest
+            gotestsum --junitfile test_output.xml -race -p $(nproc / 2)
       - store_test_results:
           path: test_output.xml
 
