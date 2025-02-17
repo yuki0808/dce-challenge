@@ -26,8 +26,7 @@ jobs:
             govulncheck ./...
       - persist_to_workspace:
           root: .
-          paths:
-            - myapp
+          paths: myapp
       - store_artifacts:
           path: myapp
 
